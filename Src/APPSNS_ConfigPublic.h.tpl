@@ -33,9 +33,17 @@
     */
     typedef enum
     {
+        APPSNS_SNSITF_ECDR_XL_POS = 0,        /**< Sensors Device ECDR_XL, Interface POS, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_XL_SPEED,            /**< Sensors Device ECDR_XL, Interface SPEED, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_XR_POS,              /**< Sensors Device ECDR_XR, Interface POS, Moteur X left position */
+        APPSNS_SNSITF_ECDR_XR_SPEED,            /**< Sensors Device ECDR_XR, Interface SPEED, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_Y_POS,               /**< Sensors Device ECDR_Y, Interface POS, Moteur X left position */
+        APPSNS_SNSITF_ECDR_Y_SPEED,             /**< Sensors Device ECDR_Y, Interface SPEED, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_Z_POS,               /**< Sensors Device ECDR_Z, Interface POS, Moteur X left position */
+        APPSNS_SNSITF_ECDR_Z_SPEED,             /**< Sensors Device ECDR_Z, Interface SPEED, Moteur Y left position */
     
-        APPSNS_SENSOR_NB,
-    } t_eAPPSNS_Sensors;
+        APPSNS_SNSITF_NB,
+    } t_eAPPSNS_SnsInterface;
 
     /**
     * @brief Enum for Sensors drivers list.
@@ -43,15 +51,28 @@
     typedef enum
     {
     
-        APPSNS_DRIVER_NB,
-    } t_eAPPSNS_Drivers;
+        APPSNS_DRV_NB,
+    } t_eAPPSNS_SnsDriverList;
+
+    /**
+    * @brief Enumeration of all sensors device list.
+    */
+    typedef enum
+    {
+        APPSNS_SNSDVC_ECDR_XL = 0,
+        APPSNS_SNSDVC_ECDR_XR,
+        APPSNS_SNSDVC_ECDR_Y,
+        APPSNS_SNSDVC_ECDR_Z,
+    
+        APPSNS_SNSDVC_NB,
+    } t_eAPPSNS_SnsDeviceList;
 
     /**
     * @brief Enum for sensor conversion list.
     */
     typedef enum
     {
-        APPSNS_MEASTYPE_RAW = 0x0,                /**< Raw value is not changed */
+        APPSNS_MEASTYPE_RAW = 0,                /**< Raw value is not changed */
         APPSNS_MEASTYPE_PRESSURE,                 /**< Sensor value converted to angle in radians */
         APPSNS_MEASTYPE_TEMPERATURE,              /**< Sensor value converted to angle in degrees */
         APPSNS_MEASTYPE_SPEED,                    /**< Sensor value converted to distance in meters */
@@ -152,17 +173,10 @@
 
     typedef enum 
     {
-        APPSNS_SENSOR_STATE_DISABLE = 0,          /**< The sensor is unused in a system configuration */
-        APPSNS_SENSOR_STATE_ENABLE,               /**< The sensor is used in a system configuration */
-        APPSNS_SENSOR_STATE_NB                    /**< Number of sensor state */
-    } t_eAPPSNS_SensorState;
-
-    typedef enum 
-    {
-        APPSNS_DRIVER_STATE_DISABLE = 0,          /**< The driver is unused in a system configuration */
-        APPSNS_DRIVER_STATE_ENABLE,                /**< The driver is used in a system configuration */
-        APPSNS_DRIVER_STATE_NB,                    /**< Number of driver state */
-    } t_eAPPSNS_DrvState;
+        APPSNS_SNS_STATE_DISABLE = 0,          /**< The sensor is unused in a system configuration */
+        APPSNS_SNS_STATE_ENABLE,               /**< The sensor is used in a system configuration */
+        APPSNS_SNS_STATE_NB                    /**< Number of sensor state */
+    } t_eAPPSNS_SnsInterfacetate;
 	/* CAUTION : Automatic generated code section for Structure: Start */
 
 	/* CAUTION : Automatic generated code section for Structure: End */
@@ -181,7 +195,7 @@
 	//-----------------------------STRUCT TYPES---------------------------//
     typedef struct 
     {
-        t_uAPPSNS_ReqestedUnity rqstedUnity_u;      /**< The unity ask for a sensors */
+        t_uint8 rqstedUnity_u8;      /**< The unity ask for a sensors */
         t_float32 rawValue_f32;      /**< Store the sensor rawValue */
         t_float32 SnsValue_f32;      /**< Store the sensor after conversion */
         t_bool   isValueOK_b;       /**< Store flag value validity */

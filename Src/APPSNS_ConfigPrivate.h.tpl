@@ -93,7 +93,7 @@
         t_cbAppSns_SetSnsCfg         * SetCfg_pcb;             /**< Reference to "set config" function */
         t_cbAppSns_GetSigValue       * GetValue_pcb;           /**< Reference to "get value" function */
         t_cbAppSns_FormatValSI       * FormatValSI_pcb;        /**< Reference to convert signal function */ 
-    } t_sAPPSNS_SysSnsFunc;
+    } t_sAPPSNS_SysSnsCfg;
 
     /**< Structure to store needed functions for a driver */
     typedef struct 
@@ -110,15 +110,15 @@
     // ********************************************************************
     /* CAUTION : Automatic generated code section for Variable: Start */
     /**< Variable for System Sensors drivers functions*/
-    const t_sAPPSNS_SysDrvFunc c_AppSns_SysDrv_apf[APPSNS_DRIVER_NB] = {
+    const t_sAPPSNS_SysDrvFunc c_AppSns_SysDrv_as[APPSNS_DRIVER_NB] = {
     };
 
     /**< Variable for System Sensors functions*/
-    const t_sAPPSNS_SysSnsFunc c_AppSns_SysSns_apf[APPSNS_SENSOR_NB] = {
+    const t_sAPPSNS_SysSnsCfg c_AppSns_SysSns_as[APPSNS_SNS_NB] = {
     };
 
     /**< Variable for Sensors Unity Management */
-    const t_eAPPSNS_SnsMeasType c_AppSns_SnsMeasType_ae[APPSNS_SENSOR_NB] = {
+    const t_eAPPSNS_SnsMeasType c_AppSns_SnsMeasType_ae[APPSNS_SNS_NB] = {
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

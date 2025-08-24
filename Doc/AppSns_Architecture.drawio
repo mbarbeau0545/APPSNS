@@ -7,16 +7,16 @@
         <mxCell id="JQH860guJ10wFqxRCOMx-1" value="" style="group" parent="1" vertex="1" connectable="0">
           <mxGeometry x="-720" y="-920" width="286" height="125.57" as="geometry" />
         </mxCell>
-        <mxCell id="JQH860guJ10wFqxRCOMx-3" value="&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap: nowrap;&quot;&gt;Enum: t_eAPPSNS_Sensors&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap: nowrap;&quot;&gt;Location : APPSNS_COnfigPublic&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;fontSize=16;align=left;" parent="JQH860guJ10wFqxRCOMx-1" vertex="1">
+        <mxCell id="JQH860guJ10wFqxRCOMx-3" value="&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap: nowrap;&quot;&gt;Enum: t_eAPPSNS_SnsInterface&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap: nowrap;&quot;&gt;Location : APPSNS_COnfigPublic&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;fontSize=16;align=left;" parent="JQH860guJ10wFqxRCOMx-1" vertex="1">
           <mxGeometry width="286" height="125.57" as="geometry" />
         </mxCell>
-        <mxCell id="JQH860guJ10wFqxRCOMx-4" value="APPSNS_SENSOR_1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;fontColor=#000000;" parent="JQH860guJ10wFqxRCOMx-1" vertex="1">
+        <mxCell id="JQH860guJ10wFqxRCOMx-4" value="APPSNS_SNS_1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;fontColor=#000000;" parent="JQH860guJ10wFqxRCOMx-1" vertex="1">
           <mxGeometry y="45.57076923076926" width="286" height="26.53846153846154" as="geometry" />
         </mxCell>
-        <mxCell id="JQH860guJ10wFqxRCOMx-5" value="APPSNS_SENSOR_1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;fontColor=#000000;" parent="JQH860guJ10wFqxRCOMx-1" vertex="1">
+        <mxCell id="JQH860guJ10wFqxRCOMx-5" value="APPSNS_SNS_1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;fontColor=#000000;" parent="JQH860guJ10wFqxRCOMx-1" vertex="1">
           <mxGeometry y="72.11076923076928" width="286" height="26.53846153846154" as="geometry" />
         </mxCell>
-        <mxCell id="JQH860guJ10wFqxRCOMx-6" value="APPSNS_SENSOR_1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;fontColor=#000000;" parent="JQH860guJ10wFqxRCOMx-1" vertex="1">
+        <mxCell id="JQH860guJ10wFqxRCOMx-6" value="APPSNS_SNS_1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;fontColor=#000000;" parent="JQH860guJ10wFqxRCOMx-1" vertex="1">
           <mxGeometry y="98.6507692307693" width="286" height="26.53846153846154" as="geometry" />
         </mxCell>
         <mxCell id="JQH860guJ10wFqxRCOMx-7" value="" style="group" parent="1" vertex="1" connectable="0">
@@ -291,7 +291,7 @@
         <mxCell id="5IjvL6KciLk__xCm0OwR-3" value="&lt;span style=&quot;font-size: 16px; text-align: left; text-wrap: nowrap;&quot;&gt;t_sAPPSNS_SysSnsCfgg&lt;/span&gt;&lt;span style=&quot;font-size: 16px; text-align: left; text-wrap: nowrap;&quot;&gt;&amp;nbsp;n APPSNS_ConfigPrivate&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;fontColor=#000000;" parent="5IjvL6KciLk__xCm0OwR-1" vertex="1">
           <mxGeometry width="429.99999999999994" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="5IjvL6KciLk__xCm0OwR-4" value="&lt;div style=&quot;text-align: left; font-size: 14px;&quot;&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;c_AppSns_SysSnsCfg_as[APPSNS_SENSOR_NB]&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;fontColor=#000000;fontSize=14;" parent="5IjvL6KciLk__xCm0OwR-1" vertex="1">
+        <mxCell id="5IjvL6KciLk__xCm0OwR-4" value="&lt;div style=&quot;text-align: left; font-size: 14px;&quot;&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;c_AppSns_SysSnsCfg_as[APPSNS_SNS_NB]&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;fontColor=#000000;fontSize=14;" parent="5IjvL6KciLk__xCm0OwR-1" vertex="1">
           <mxGeometry y="40" width="429.99999999999994" height="50" as="geometry" />
         </mxCell>
         <mxCell id="5IjvL6KciLk__xCm0OwR-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="IQdZZlQItys5ZnmAAsMM-18" target="5IjvL6KciLk__xCm0OwR-3" edge="1">
@@ -397,7 +397,7 @@
         <mxCell id="57HTjIAC7yhg5zuUKe4r-2" value="get a sensors value from enum&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;fontColor=#000000;align=left;" parent="57HTjIAC7yhg5zuUKe4r-1" vertex="1">
           <mxGeometry width="670" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="57HTjIAC7yhg5zuUKe4r-3" value="APPSNS_GetSnsValue(t_eAppSns_Sensor f_Sns_e, t_sint16 *f_SnsValue_f32)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;fontColor=#000000;" parent="57HTjIAC7yhg5zuUKe4r-1" vertex="1">
+        <mxCell id="57HTjIAC7yhg5zuUKe4r-3" value="APPSNS_GetSnsValue(t_eAPPSNS_SNS f_Sns_e, t_sint16 *f_SnsValue_f32)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;fontColor=#000000;" parent="57HTjIAC7yhg5zuUKe4r-1" vertex="1">
           <mxGeometry width="670" height="40" as="geometry" />
         </mxCell>
         <mxCell id="57HTjIAC7yhg5zuUKe4r-4" value="" style="group" parent="1" vertex="1" connectable="0">
@@ -415,7 +415,7 @@
         <mxCell id="iI8cEl7H8al2ePRIT6zV-2" value="get value from a signal&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;fontColor=#000000;align=left;" parent="iI8cEl7H8al2ePRIT6zV-1" vertex="1">
           <mxGeometry width="670" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="iI8cEl7H8al2ePRIT6zV-3" value="APPSNS_GetSnsValue(t_eAPPSNS_Sensors f_Sns_e,&amp;nbsp;&lt;span style=&quot;font-size: 12px; text-align: left; text-wrap: nowrap;&quot;&gt;t_sAPPSNS_SnsValueInfo&lt;/span&gt;&lt;span style=&quot;font-size: 12px; text-align: left; text-wrap: nowrap;&quot;&gt;* f_SnsVal_s)&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;fontColor=#000000;fontSize=12;" parent="iI8cEl7H8al2ePRIT6zV-1" vertex="1">
+        <mxCell id="iI8cEl7H8al2ePRIT6zV-3" value="APPSNS_GetSnsValue(t_eAPPSNS_SnsInterface f_Sns_e,&amp;nbsp;&lt;span style=&quot;font-size: 12px; text-align: left; text-wrap: nowrap;&quot;&gt;t_sAPPSNS_SnsValueInfo&lt;/span&gt;&lt;span style=&quot;font-size: 12px; text-align: left; text-wrap: nowrap;&quot;&gt;* f_SnsVal_s)&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;fontColor=#000000;fontSize=12;" parent="iI8cEl7H8al2ePRIT6zV-1" vertex="1">
           <mxGeometry width="670" height="40" as="geometry" />
         </mxCell>
       </root>
@@ -562,7 +562,7 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="zQl5dEEzDweHKCi_yx2o-1" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;APPSNS_GetSnsValue(t_eAPPSNS_Sensors f_Sns_e,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap: nowrap; text-align: left;&quot;&gt;t_sAPPSNS_ClaimSns * f_SnsVal_s)&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;verticalAlign=top;" parent="1" vertex="1">
+        <mxCell id="zQl5dEEzDweHKCi_yx2o-1" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;APPSNS_GetSnsValue(t_eAPPSNS_SnsInterface f_Sns_e,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap: nowrap; text-align: left;&quot;&gt;t_sAPPSNS_ClaimSns * f_SnsVal_s)&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="-289.15" y="-2310" width="1099.15" height="1500" as="geometry" />
         </mxCell>
         <mxCell id="zQl5dEEzDweHKCi_yx2o-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="zQl5dEEzDweHKCi_yx2o-3" target="zQl5dEEzDweHKCi_yx2o-5" edge="1">
@@ -580,7 +580,7 @@
         <mxCell id="zQl5dEEzDweHKCi_yx2o-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="zQl5dEEzDweHKCi_yx2o-7" target="zQl5dEEzDweHKCi_yx2o-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="zQl5dEEzDweHKCi_yx2o-7" value="if&amp;nbsp; f_Sns_e&amp;gt;&amp;nbsp;&lt;span style=&quot;text-align: left; text-wrap: nowrap;&quot;&gt;t_eAPPSNS_SENSOR_NB&lt;/span&gt;-&amp;gt; exitCode" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#6d8764;fontColor=#000000;strokeColor=#3A5431;" parent="1" vertex="1">
+        <mxCell id="zQl5dEEzDweHKCi_yx2o-7" value="if&amp;nbsp; f_Sns_e&amp;gt;&amp;nbsp;&lt;span style=&quot;text-align: left; text-wrap: nowrap;&quot;&gt;t_eAPPSNS_SNS_NB&lt;/span&gt;-&amp;gt; exitCode" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#6d8764;fontColor=#000000;strokeColor=#3A5431;" parent="1" vertex="1">
           <mxGeometry x="274.06" y="-1960" width="375.94" height="20" as="geometry" />
         </mxCell>
         <mxCell id="zQl5dEEzDweHKCi_yx2o-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="zQl5dEEzDweHKCi_yx2o-9" target="zQl5dEEzDweHKCi_yx2o-11" edge="1">

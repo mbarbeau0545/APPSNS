@@ -90,31 +90,13 @@
     t_eReturnCode APPSNS_SetState(t_eCyclicModState f_State_e);
     /**
     *
-    *	@brief  Set sensor state enable/disable
-    *
-    *	@param[in]  f_Sns_e         : actuator enum @ref t_eAPPSNS_Sensors
-    *	@param[in]  f_SnsState_pe   : storage for the value 
-    * 
-    */
-    t_eReturnCode APPSNS_Set_SensorState(t_eAPPSNS_Sensors f_Sns_e, t_eAPPSNS_SensorState f_SnsState_e);
-    /**
-    *
-    *	@brief  Get sensor state enable/disable
-    *
-    *	@param[in]  f_Sns_e         : actuator enum @ref t_eAPPSNS_Sensors
-    *	@param[in]  f_SnsState_pe   : storage for the value 
-    *
-    */
-    t_eReturnCode APPSNS_Get_SensorState(t_eAPPSNS_Sensors f_Sns_e, t_eAPPSNS_SensorState *f_SnsState_pe);
-    /**
-    *
     *	@brief  Get sensor value 
     *
     *	@param[in]  f_Sns_e   : actuator enum
     *	@param[in]  f_value_ps16   : storage for the value 
     * 
     */
-    t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_Sensors f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsValue_ps16);
+    t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsValue_ps16);
 
 #endif // APP_SNS_H_INCLUDED           
 //************************************************************************************
