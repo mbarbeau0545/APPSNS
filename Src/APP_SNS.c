@@ -35,9 +35,9 @@
 ///@brief fsm state to cfg state
 typedef enum 
 {
-    APPSNS_FSM_CFGSTS_GET_CFG = 0,
+    APPSNS_FSM_CFGSTS_INIT_DRIVER = 0,
+    APPSNS_FSM_CFGSTS_GET_CFG,
     APPSNS_FSM_CFGSTS_APPLY_CFG,
-    APPSNS_FSM_CFGSTS_INIT_DRIVER,
 } t_eAPPSNS_FsmCfgsts;
 
 ///@brief Driver state
@@ -76,7 +76,7 @@ typedef struct
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
 static t_eCyclicModState g_AppSns_ModState_e = STATE_CYCLIC_CFG;
-static t_eAPPSNS_FsmCfgsts g_FsmCfgSts_e = APPSNS_FSM_CFGSTS_GET_CFG;
+static t_eAPPSNS_FsmCfgsts g_FsmCfgSts_e = APPSNS_FSM_CFGSTS_INIT_DRIVER;
 /**
  * @brief Sensors Interface Information
  */
@@ -476,6 +476,18 @@ static t_eReturnCode s_APPSNS_ConfigurationState(void)
 
     switch(g_FsmCfgSts_e)
     {
+        case APPSNS_FSM_CFGSTS_INIT_DRIVER:
+            Ret_e = s_APPSNS_Fsm_CfgSts_InitDriver();
+            if(Ret_e == RC_OK)
+            {
+                Ret_e = RC_WARNING_PENDING;
+                g_FsmCfgSts_e = APPSNS_FSM_CFGSTS_GET_CFG;
+            }
+            else if(Ret_e > RC_OK)
+            {
+                Ret_e = RC_WARNING_PENDING;
+            }
+        break;
         case APPSNS_FSM_CFGSTS_GET_CFG:
             Ret_e = s_APPSNS_Fsm_CfgSts_GetCfg();
             if(Ret_e == RC_OK)
@@ -492,20 +504,8 @@ static t_eReturnCode s_APPSNS_ConfigurationState(void)
             Ret_e = s_APPSNS_Fsm_CfgSts_ApplyCfg();
             if(Ret_e == RC_OK)
             {
-                Ret_e = RC_WARNING_PENDING;
-                g_FsmCfgSts_e = APPSNS_FSM_CFGSTS_INIT_DRIVER;
-            }
-            else if(Ret_e > RC_OK)
-            {
-                Ret_e = RC_WARNING_PENDING;
-            }
-        break;
-        case APPSNS_FSM_CFGSTS_INIT_DRIVER:
-            Ret_e = s_APPSNS_Fsm_CfgSts_InitDriver();
-            if(Ret_e == RC_OK)
-            {
                 // Ret_e = RC_OK; // out of cfg sts
-                g_FsmCfgSts_e = APPSNS_FSM_CFGSTS_GET_CFG;
+                g_FsmCfgSts_e = APPSNS_FSM_CFGSTS_INIT_DRIVER;
             }
             else if(Ret_e > RC_OK)
             {
@@ -574,9 +574,20 @@ static t_eReturnCode s_APPSNS_Fsm_CfgSts_ApplyCfg(void)
                 && (drvUsed_e < APPSNS_DRV_NB))
                 {
                     g_SnsDrvState_ae[drvUsed_e] = APPSNS_DRIVER_STATE_ENABLE;
+
+                    if((c_AppSns_SysDrv_as[drvUsed_e].isFastTaskCyclic_b == (t_bool)TRUE)
+                    && (g_enableFastTask_b == (t_bool)FALSE))
+                    {
+                        g_enableFastTask_b = (t_bool)TRUE;
+                    }
                 }
 
                 snsDeviceInfo_ps->isConfigured_b = (t_bool)TRUE;                
+            }
+            //---- ok sensor don't use ----//
+            else if(Ret_e == RC_WARNING_NO_OPERATION)
+            {
+                Ret_e = RC_OK;
             }
         }
         else
@@ -606,17 +617,9 @@ static t_eReturnCode s_APPSNS_Fsm_CfgSts_InitDriver(void)
     Ret_e = RC_OK;
     for(LLDRV_u8 = (t_uint8)0; (LLDRV_u8 < APPSNS_DRV_NB) && (Ret_e == RC_OK) ; LLDRV_u8++)
     {
-        if((c_AppSns_SysDrv_as[LLDRV_u8].Init_pcb != (t_cbAppSns_DrvInit *)NULL_FUNCTION)
-        && g_SnsDrvState_ae[LLDRV_u8] == APPSNS_DRIVER_STATE_ENABLE)
+        if(c_AppSns_SysDrv_as[LLDRV_u8].Init_pcb != (t_cbAppSns_DrvInit *)NULL_FUNCTION)
         {
             Ret_e = (c_AppSns_SysDrv_as[LLDRV_u8].Init_pcb)();
-
-            if((c_AppSns_SysDrv_as[LLDRV_u8].isFastTaskCyclic_b == (t_bool)TRUE)
-            && (g_enableFastTask_b == (t_bool)FALSE)
-            && (Ret_e == RC_OK))
-            {
-                g_enableFastTask_b = (t_bool)TRUE;
-            }
         }
     }
 
