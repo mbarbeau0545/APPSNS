@@ -902,6 +902,9 @@ static t_eReturnCode s_APPSNS_ConvertDistance(t_eAPPSNS_DistanceUnity f_unity_e,
             case APPSNS_DISTANCE_UNIT_CENTIMETER:
                 *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 * 100.0f); // Conversion de mètres en cm
                 break;
+            case APPSNS_DISTANCE_UNIT_MILLIMETER:
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 * 1000.0f); // meter to mm
+            break;
             case APPSNS_DISTANCE_UNIT_KILOMETER:
                 *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 / 1000.0f); // Conversion de mètres en km
                 break;
