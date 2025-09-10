@@ -145,6 +145,13 @@ static t_eReturnCode s_APPSNS_PreOperational(void);
  */
 static void s_APPSNS_FastTask(void);
 /**
+ *
+ *	@brief      Perform preOperationnal action.\n
+
+
+ */
+static void s_APPSNS_DebugRoutine(void);
+/**
 *
 *	@brief  Convert Management.\n
 *   @note   If the sensors value requested is not a voltage, depending on 
@@ -665,6 +672,8 @@ static t_eReturnCode s_APPSNS_Operational(void)
         }
     }
 
+    s_APPSNS_DebugRoutine();
+
     return Ret_e;
 }
 
@@ -693,6 +702,30 @@ static void s_APPSNS_FastTask(void)
     return;
 }
 
+/*********************************
+ * s_APPSNS_DebugRoutine
+ *********************************/
+static void s_APPSNS_DebugRoutine(void)
+{
+    t_eReturnCode Ret_e;
+    t_sint32 idxSnsIf_s32;
+    t_sAPPSNS_SnsIfaceInfo * snsIfInfo_ps;
+
+    for(idxSnsIf_s32 = 0 ; idxSnsIf_s32 < APPSNS_SNSITF_NB ; idxSnsIf_s32 ++)
+    {
+        snsIfInfo_ps = &g_SnsInterfaceInfo_as[idxSnsIf_s32];
+        if(snsIfInfo_ps->cfgInfo_ps->SigDebug_e < APPSIG_SIGNAL_NB)
+        {
+            Ret_e = APPSIG_SetSignalValue(snsIfInfo_ps->cfgInfo_ps->SigDebug_e, snsIfInfo_ps->snsValues_f32);
+            if(Ret_e != RC_OK)
+            {
+                ASSERT((t_uint16)Ret_e);
+            }
+        }
+    }
+
+    return;
+}
 /*********************************
  * s_APPSNS_ConvertingManagement
  *********************************/
