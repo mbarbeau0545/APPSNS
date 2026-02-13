@@ -320,7 +320,7 @@ t_eReturnCode APPSNS_Init(void)
         }
         else
         {
-            g_SnsDeviceInfo_as[idxDvcSns_u8].isConfigured_b = (t_bool)TRUE;
+            g_SnsDeviceInfo_as[idxDvcSns_u8].isConfigured_b = (t_bool)FALSE;
             g_SnsDeviceInfo_as[idxDvcSns_u8].dvcCfg_u8 = 0xFF;
             g_SnsDeviceInfo_as[idxDvcSns_u8].dvcOpeCfg_ps = &c_AppSns_SnsDvcOpeCfg_as[idxDvcSns_u8];
         }
@@ -351,7 +351,7 @@ t_eReturnCode APPSNS_Cyclic(void)
         Ret_e = s_APPSNS_ConfigurationState();
         if(Ret_e == RC_OK)
         {
-            g_AppSns_ModState_e = STATE_CYCLIC_WAITING;
+            g_AppSns_ModState_e = STATE_CYCLIC_PREOPE;
         }
         break;
     }
@@ -362,11 +362,6 @@ t_eReturnCode APPSNS_Cyclic(void)
         {
             g_AppSns_ModState_e = STATE_CYCLIC_OPE;
         }
-        break;
-    }
-    case STATE_CYCLIC_WAITING:
-    {
-        // nothing to do, just wait all module are Ope
         break;
     }
     case STATE_CYCLIC_OPE:
