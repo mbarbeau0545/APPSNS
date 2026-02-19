@@ -441,8 +441,10 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
 
         if(g_SnsDeviceInfo_as[snsDeviceLink_e].isConfigured_b == (t_bool)FALSE)
         {
-            Ret_e = RC_ERROR_MISSING_CONFIG;
-            ASSERT((t_uint16)0);
+            f_SnsInfo_ps->rawValue_f32 = 0.0F;
+            f_SnsInfo_ps->SnsValue_f32 = 0.0F;
+            f_SnsInfo_ps->isValueOK_b = FALSE;
+            Ret_e = RC_WARNING_MISSING_CONFIG;
         }
         else 
         {
