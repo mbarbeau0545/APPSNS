@@ -168,7 +168,7 @@ t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, t_sA
 *	@brief  Convert Temperature Management
 *
 *	@param[in] f_unity_e : Temperature unity requested
-*	@param[in] f_snsValueSI_s16 : Temperature value in SI unity
+*	@param[in] f_snsValueSI_f32 : Temperature value in SI unity
 *	@param[in] f_SnsValue_f32 : Temperature value in f_unity_e unity
 *	@param[out]
 *	 
@@ -176,42 +176,42 @@ t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, t_sA
 *
 */
 static t_eReturnCode s_APPSNS_ConvertTemperature(t_eAPPSNS_TempUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32);
 /**
 *
 *	@brief  Convert Pressure Management
 *
 *	@param[in] f_unity_e : Pressure unity requested
-*	@param[in] f_snsValueSI_s16 : Pressure value in SI unity
+*	@param[in] f_snsValueSI_f32 : Pressure value in SI unity
 *	@param[in] f_SnsValue_f32 : Pressure value in f_unity_e unity
 *	 
 *
 *
 */
 static t_eReturnCode s_APPSNS_ConvertPressure(t_eAPPSNS_PressureUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32);
 /**
 *
 *	@brief  Convert Speed Management
 *
 *	@param[in] f_unity_e : Speed unity requested
-*	@param[in] f_snsValueSI_s16 : Speed value in SI unity
+*	@param[in] f_snsValueSI_f32 : Speed value in SI unity
 *	@param[in] f_SnsValue_f32 : Speed value in f_unity_e unity
 *	 
 *
 *
 */
 static t_eReturnCode s_APPSNS_ConvertSpeed(t_eAPPSNS_SpeedUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32);
 /**
 *
 *	@brief  Convert Angular Speed Management
 *
 *	@param[in] f_unity_e : Angular Speed unity requested
-*	@param[in] f_snsValueSI_s16 : Angular Speed value in SI unity
+*	@param[in] f_snsValueSI_f32 : Angular Speed value in SI unity
 *	@param[in] f_SnsValue_f32 : Angular Speed value in f_unity_e unity
 *	@param[out]
 *	 
@@ -219,7 +219,7 @@ static t_eReturnCode s_APPSNS_ConvertSpeed(t_eAPPSNS_SpeedUnity f_unity_e,
 *
 */
 static t_eReturnCode s_APPSNS_ConvertAngularSpeed(t_eAPPSNS_AngularSpdUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32);
 
 /**
@@ -227,7 +227,7 @@ static t_eReturnCode s_APPSNS_ConvertAngularSpeed(t_eAPPSNS_AngularSpdUnity f_un
 *	@brief  Convert Angle Management
 *
 *	@param[in] f_unity_e : Speed unity requested
-*	@param[in] f_snsValueSI_s16 : Speed value in SI unity
+*	@param[in] f_snsValueSI_f32 : Speed value in SI unity
 *	@param[in] f_SnsValue_f32 : Speed value in f_unity_e unity
 *	@param[out]
 *	 
@@ -235,14 +235,14 @@ static t_eReturnCode s_APPSNS_ConvertAngularSpeed(t_eAPPSNS_AngularSpdUnity f_un
 *
 */
 static t_eReturnCode s_APPSNS_ConvertAngle(t_eAPPSNS_AngleUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32);
 /**
 *
 *	@brief  Convert Distance Management
 *
 *	@param[in] f_unity_e : Distance unity requested
-*	@param[in] f_snsValueSI_s16 : Distance value in SI unity
+*	@param[in] f_snsValueSI_f32 : Distance value in SI unity
 *	@param[in] f_SnsValue_f32 : Distance value in f_unity_e unity
 *	@param[out]
 *	 
@@ -250,14 +250,14 @@ static t_eReturnCode s_APPSNS_ConvertAngle(t_eAPPSNS_AngleUnity f_unity_e,
 *
 */
 static t_eReturnCode s_APPSNS_ConvertDistance(t_eAPPSNS_DistanceUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32);
 /**
 *
 *	@brief  Convert Force Management
 *
 *	@param[in] f_unity_e : Force unity requested
-*	@param[in] f_snsValueSI_s16 : Force value in SI unity
+*	@param[in] f_snsValueSI_f32 : Force value in SI unity
 *	@param[in] f_SnsValue_f32 : Force value in f_unity_e unity
 *	@param[out]
 *	 
@@ -265,14 +265,14 @@ static t_eReturnCode s_APPSNS_ConvertDistance(t_eAPPSNS_DistanceUnity f_unity_e,
 *
 */
 static t_eReturnCode s_APPSNS_ConvertForce(t_eAPPSNS_ForceUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32);
 /**
 *
 *	@brief  Convert Flow Management
 *
 *	@param[in] f_unity_e : Flow unity requested
-*	@param[in] f_snsValueSI_s16 : Flow value in SI unity
+*	@param[in] f_snsValueSI_f32 : Flow value in SI unity
 *	@param[in] f_SnsValue_f32 : Flow value in f_unity_e unity
 *	@param[out]
 *	 
@@ -280,7 +280,7 @@ static t_eReturnCode s_APPSNS_ConvertForce(t_eAPPSNS_ForceUnity f_unity_e,
 *
 */
 static t_eReturnCode s_APPSNS_ConvertFlow(t_eAPPSNS_FlowUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32);
 //****************************************************************************
 //                      Public functions - Implementation
@@ -782,6 +782,7 @@ t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, t_sA
             default:
                 Ret_e = RC_ERROR_PARAM_INVALID;
                 f_snsInfo_ps->SnsValue_f32 = (t_float32)f_snsInfo_ps->rawValue_f32;
+                ASSERT((t_uint16)c_AppSns_SysSns_as[f_sns_e].measTyp_e);
         }
     }
     return Ret_e;
@@ -791,7 +792,7 @@ t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, t_sA
  * s_APPSNS_ConvertTemperature
  *********************************/
 static t_eReturnCode s_APPSNS_ConvertTemperature(t_eAPPSNS_TempUnity f_unity_e, 
-                                                    t_sint16 f_snsValueSI_s16, 
+                                                    t_float32 f_snsValueSI_f32, 
                                                     t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -809,19 +810,20 @@ static t_eReturnCode s_APPSNS_ConvertTemperature(t_eAPPSNS_TempUnity f_unity_e,
         switch(f_unity_e)
         {
             case APPSNS_TEMP_UNIT_KELVIN:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16);
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 break;
             case APPSNS_TEMP_UNIT_CELSIUS:
-                *f_snsValue_pf32 = (t_float32)((t_float32)f_snsValueSI_s16 - (t_float32)273.15); // temperature in degrees
+                *f_snsValue_pf32 = (t_float32)((t_float32)f_snsValueSI_f32 - (t_float32)273.15); // temperature in degrees
                 break;
             case APPSNS_TEMP_UNIT_FAHRENHEIT:
-                *f_snsValue_pf32 = (t_float32)(((t_float32)f_snsValueSI_s16 - (t_float32)273.15)  // temperatur in fahrenheit
+                *f_snsValue_pf32 = (t_float32)(((t_float32)f_snsValueSI_f32 - (t_float32)273.15)  // temperatur in fahrenheit
                                                             * (t_float32)1.8 + (t_float32)32.0);
                 break;
             case APPSNS_TEMP_UNIT_NB:
             default:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16);
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
+                ASSERT((t_uint16)f_unity_e);
         }
     }
     return Ret_e;
@@ -831,7 +833,7 @@ static t_eReturnCode s_APPSNS_ConvertTemperature(t_eAPPSNS_TempUnity f_unity_e,
  * s_APPSNS_ConvertFlow
  *********************************/
 static t_eReturnCode s_APPSNS_ConvertFlow(t_eAPPSNS_FlowUnity f_unity_e, 
-                                           t_sint16 f_snsValueSI_s16, 
+                                           t_float32 f_snsValueSI_f32, 
                                            t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -849,18 +851,19 @@ static t_eReturnCode s_APPSNS_ConvertFlow(t_eAPPSNS_FlowUnity f_unity_e,
         switch(f_unity_e)
         {
             case APPSNS_FLOW_UNIT_LPM:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16); // Débit en L/min
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32); // Débit en L/min
                 break;
             case APPSNS_FLOW_UNIT_M3PS:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 / 60000.0f); // Conversion de L/min en m³/s
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32 / 60000.0f); // Conversion de L/min en m³/s
                 break;
             case APPSNS_FLOW_UNIT_GPM:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 * 0.264172f); // Conversion de L/min en GPM
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32 * 0.264172f); // Conversion de L/min en GPM
                 break;
             case APPSNS_FLOW_UNIT_NB:
             default:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16);
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
+                ASSERT((t_uint16)f_unity_e);
         }
     }
     return Ret_e;
@@ -870,7 +873,7 @@ static t_eReturnCode s_APPSNS_ConvertFlow(t_eAPPSNS_FlowUnity f_unity_e,
  * s_APPSNS_ConvertForce
  *********************************/
 static t_eReturnCode s_APPSNS_ConvertForce(t_eAPPSNS_ForceUnity f_unity_e, 
-                                            t_sint16 f_snsValueSI_s16, 
+                                            t_float32 f_snsValueSI_f32, 
                                             t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -888,18 +891,19 @@ static t_eReturnCode s_APPSNS_ConvertForce(t_eAPPSNS_ForceUnity f_unity_e,
         switch(f_unity_e)
         {
             case APPSNS_FORCE_UNIT_NEWTON:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16); // Force en Newtons
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32); // Force en Newtons
                 break;
             case APPSNS_FORCE_UNIT_DYNE:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 * 100000.0f); // Conversion de Newton en Dyne
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32 * 100000.0f); // Conversion de Newton en Dyne
                 break;
             case APPSNS_FORCE_UNIT_POUND_FORCE:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 * 0.224809f); // Conversion de Newton en lbf
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32 * 0.224809f); // Conversion de Newton en lbf
                 break;
             case APPSNS_FORCE_UNIT_NB:
             default:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16);
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
+                ASSERT((t_uint16)f_unity_e);
         }
     }
     return Ret_e;
@@ -909,7 +913,7 @@ static t_eReturnCode s_APPSNS_ConvertForce(t_eAPPSNS_ForceUnity f_unity_e,
  * s_APPSNS_ConvertDistance
  *********************************/
 static t_eReturnCode s_APPSNS_ConvertDistance(t_eAPPSNS_DistanceUnity f_unity_e, 
-                                               t_sint16 f_snsValueSI_s16, 
+                                               t_float32 f_snsValueSI_f32, 
                                                t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -927,23 +931,23 @@ static t_eReturnCode s_APPSNS_ConvertDistance(t_eAPPSNS_DistanceUnity f_unity_e,
         switch(f_unity_e)
         {
             case APPSNS_DISTANCE_UNIT_METER:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16); // Distance en mètres
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32); // Distance en mètres
                 break;
             case APPSNS_DISTANCE_UNIT_CENTIMETER:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 * 100.0f); // Conversion de mètres en cm
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32 * 100.0f); // Conversion de mètres en cm
                 break;
             case APPSNS_DISTANCE_UNIT_MILLIMETER:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 * 1000.0f); // meter to mm
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32 * 1000.0f); // meter to mm
             break;
             case APPSNS_DISTANCE_UNIT_KILOMETER:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 / 1000.0f); // Conversion de mètres en km
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32 / 1000.0f); // Conversion de mètres en km
                 break;
             case APPSNS_DISTANCE_UNIT_MILE:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16 * 0.000621371f); // Conversion de mètres en miles
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32 * 0.000621371f); // Conversion de mètres en miles
                 break;
             case APPSNS_DISTANCE_UNIT_NB:
             default:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16);
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
         }
     }
@@ -954,7 +958,7 @@ static t_eReturnCode s_APPSNS_ConvertDistance(t_eAPPSNS_DistanceUnity f_unity_e,
  * s_APPSNS_ConvertAngle
  *********************************/
 static t_eReturnCode s_APPSNS_ConvertAngle(t_eAPPSNS_AngleUnity f_unity_e, 
-                                            t_sint16 f_snsValueSI_s16, 
+                                            t_float32 f_snsValueSI_f32, 
                                             t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -972,15 +976,19 @@ static t_eReturnCode s_APPSNS_ConvertAngle(t_eAPPSNS_AngleUnity f_unity_e,
         switch(f_unity_e)
         {
             case APPSNS_ANGLE_UNIT_RADIAN:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16); // Angle en radians
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32); // Angle en radians
                 break;
+            case APPSNS_ANGLE_UNIT_MILLIRADIAN:
+                *f_snsValue_pf32 = f_snsValueSI_f32 * 1000.0F;
+            break;
             case APPSNS_ANGLE_UNIT_DEGREE:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16) * 57.2958f; // Conversion de radians en degrés
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32) * 57.2958f; // Conversion de radians en degrés
                 break;
             case APPSNS_ANGLE_UNIT_NB:
             default:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16);
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
+                ASSERT((t_uint16)f_unity_e);
         }
     }
     return Ret_e;
@@ -991,7 +999,7 @@ static t_eReturnCode s_APPSNS_ConvertAngle(t_eAPPSNS_AngleUnity f_unity_e,
  * s_APPSNS_ConvertPressure
  *********************************/
 static t_eReturnCode s_APPSNS_ConvertPressure(t_eAPPSNS_PressureUnity f_unity_e, 
-                                               t_sint16 f_snsValueSI_s16, 
+                                               t_float32 f_snsValueSI_f32, 
                                                t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -1009,18 +1017,19 @@ static t_eReturnCode s_APPSNS_ConvertPressure(t_eAPPSNS_PressureUnity f_unity_e,
         switch(f_unity_e)
         {
             case APPSNS_PRESSURE_UNIT_PASCAL:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16); // Pression en Pa
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32); // Pression en Pa
                 break;
             case APPSNS_PRESSURE_UNIT_BAR:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16) * 0.00001f; // Conversion de Pa en bar
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32) * 0.00001f; // Conversion de Pa en bar
                 break;
             case APPSNS_PRESSURE_UNIT_PSI:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16) * 0.000145038f; // Conversion de Pa en psi
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32) * 0.000145038f; // Conversion de Pa en psi
                 break;
             case APPSNS_PRESSURE_UNIT_NB:
             default:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16);
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
+                ASSERT((t_uint16)f_unity_e);
         }
     }
     return Ret_e;
@@ -1030,7 +1039,7 @@ static t_eReturnCode s_APPSNS_ConvertPressure(t_eAPPSNS_PressureUnity f_unity_e,
  * s_APPSNS_ConvertSpeed
  *********************************/
 static t_eReturnCode s_APPSNS_ConvertSpeed(t_eAPPSNS_SpeedUnity f_unity_e, 
-                                            t_sint16 f_snsValueSI_s16, 
+                                            t_float32 f_snsValueSI_f32, 
                                             t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -1048,18 +1057,19 @@ static t_eReturnCode s_APPSNS_ConvertSpeed(t_eAPPSNS_SpeedUnity f_unity_e,
         switch(f_unity_e)
         {
             case APPSNS_SPEED_UNIT_METER_PER_SEC:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16); // Vitesse en m/s
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32); // Vitesse en m/s
                 break;
             case APPSNS_SPEED_UNIT_KM_PER_HOUR:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16) * 3.6f; // Conversion de m/s en km/h
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32) * 3.6f; // Conversion de m/s en km/h
                 break;
             case APPSNS_SPEED_UNIT_MILES_PER_HOUR:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16) * 2.23694f; // Conversion de m/s en mph
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32) * 2.23694f; // Conversion de m/s en mph
                 break;
             case APPSNS_SPEED_UNIT_NB:
             default:
-                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_s16);
+                *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
+                ASSERT((t_uint16)f_unity_e);
         }
     }
     return Ret_e;
@@ -1069,7 +1079,7 @@ static t_eReturnCode s_APPSNS_ConvertSpeed(t_eAPPSNS_SpeedUnity f_unity_e,
  * s_APPSNS_ConvertAngularSpeed
  *********************************/
 static t_eReturnCode s_APPSNS_ConvertAngularSpeed(t_eAPPSNS_AngularSpdUnity f_unity_e, 
-                                                   t_sint16 f_snsValueSI_s16, 
+                                                   t_float32 f_snsValueSI_f32, 
                                                    t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -1087,29 +1097,32 @@ static t_eReturnCode s_APPSNS_ConvertAngularSpeed(t_eAPPSNS_AngularSpdUnity f_un
         switch (f_unity_e)
         {
             case APPSNS_ANGULARSPD_RADIAN_PER_SEC:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_s16;
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32;
                 break;
-
+            case APPSNS_ANGULARSPD_MILLI_RADIAN_PER_SEC:
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * 1000.0F; 
+            break;
             case APPSNS_ANGULARSPD_DEGREE_PER_SEC:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_s16 * (t_float32)(180.0 / M_PI);
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(180.0 / M_PI);
                 break;
 
             case APPSNS_ANGULARSPD_ROUND_PER_MIN:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_s16 * (t_float32)(60.0 / (2.0 * M_PI));
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(60.0 / (2.0 * M_PI));
                 break;
 
             case APPSNS_ANGULARSPD_ROUND_PER_SEC:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_s16 / (t_float32)(2.0 * M_PI);
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 / (t_float32)(2.0 * M_PI);
                 break;
 
             case APPSNS_ANGULARSPD_DEGREE_PER_MIN:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_s16 * (t_float32)(180.0 * 60.0 / M_PI);
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(180.0 * 60.0 / M_PI);
                 break;
 
             case APPSNS_ANGULARSPD_NB:
             default:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_s16;
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32;
                 Ret_e = RC_WARNING_NOT_ALLOWED;
+                ASSERT((t_uint16)f_unity_e);
         }
     }
     return Ret_e;
