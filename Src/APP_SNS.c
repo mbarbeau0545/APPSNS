@@ -38,6 +38,7 @@ typedef enum
     APPSNS_FSM_CFGSTS_INIT_DRIVER = 0,
     APPSNS_FSM_CFGSTS_GET_CFG,
     APPSNS_FSM_CFGSTS_APPLY_CFG,
+    APPSNS_FSM_CFGSTS_LOAD_CALIB,
 } t_eAPPSNS_FsmCfgsts;
 
 ///@brief Driver state
@@ -118,6 +119,14 @@ static t_eReturnCode s_APPSNS_Fsm_CfgSts_GetCfg(void);
 *
 */
 static t_eReturnCode s_APPSNS_Fsm_CfgSts_ApplyCfg(void);
+/**
+*
+*	@brief
+*	@note   
+*
+*
+*/
+static t_eReturnCode s_APPSNS_Fsm_CfgSts_LoadCalib(void);
 /**
 *
 *	@brief
@@ -329,10 +338,16 @@ t_eReturnCode APPSNS_Init(void)
     {
         g_SnsDrvState_ae[idxDrv_u8] = APPSNS_DRIVER_STATE_DISABLE;
     }
+    //---- calibraito module ----//
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSNSCAL_Init();
+    }
     if(Ret_e == RC_OK)
     {
         Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_SNS, s_APPSNS_FastTask);
     }
+    
 
 
     return Ret_e;
@@ -419,6 +434,7 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
     t_eReturnCode Ret_e = RC_OK;
     t_eAPPSNS_SnsDeviceList snsDeviceLink_e;
     t_sAPPSNS_SnsIfaceInfo * snsIfInfo_ps;
+    t_float32 calibRawValue_f32;
 
     if(g_AppSns_ModState_e != STATE_CYCLIC_OPE)
     {
@@ -429,7 +445,7 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
         Ret_e = RC_ERROR_PTR_NULL;
         ASSERT((t_uint16)0);
     }
-    if(f_Sns_e > APPSNS_SNSITF_NB)
+    if(f_Sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
         ASSERT((t_uint16)f_Sns_e);
@@ -448,8 +464,19 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
         }
         else 
         {
-            // call specific function to get value
+            //---- call specific function to get value ----//
             Ret_e = snsIfInfo_ps->cfgInfo_ps->GetValue_pcb(&f_SnsInfo_ps->rawValue_f32, &f_SnsInfo_ps->isValueOK_b);
+            if(Ret_e == RC_OK)
+            {
+                //---- apply calibratio on raw value 
+                Ret_e = APPSNSCAL_Apply(f_Sns_e,
+                                        f_SnsInfo_ps->rawValue_f32,
+                                        &calibRawValue_f32);
+                if(Ret_e == RC_OK)
+                {
+                    f_SnsInfo_ps->rawValue_f32 = calibRawValue_f32;
+                }
+            }
             if(Ret_e == RC_OK)
             {
                 Ret_e = s_APPSNS_ConvertingManagement(f_Sns_e, f_SnsInfo_ps);
@@ -508,7 +535,19 @@ static t_eReturnCode s_APPSNS_ConfigurationState(void)
             Ret_e = s_APPSNS_Fsm_CfgSts_ApplyCfg();
             if(Ret_e == RC_OK)
             {
-                // Ret_e = RC_OK; // out of cfg sts
+                Ret_e = RC_WARNING_PENDING;
+                g_FsmCfgSts_e = APPSNS_FSM_CFGSTS_LOAD_CALIB;
+            }
+            else if(Ret_e > RC_OK)
+            {
+                Ret_e = RC_WARNING_PENDING;
+            }
+        break;
+        case APPSNS_FSM_CFGSTS_LOAD_CALIB:
+            Ret_e = s_APPSNS_Fsm_CfgSts_LoadCalib();
+            if(Ret_e == RC_OK)
+            {
+                //Ret_e = OK; // out of cfg sts
                 g_FsmCfgSts_e = APPSNS_FSM_CFGSTS_INIT_DRIVER;
             }
             else if(Ret_e > RC_OK)
@@ -569,11 +608,13 @@ static t_eReturnCode s_APPSNS_Fsm_CfgSts_ApplyCfg(void)
         snsDeviceInfo_ps = (t_sAPPSNS_SnsDvcInfo *)(&g_SnsDeviceInfo_as[s_LLSNS_u8]);
         if(snsDeviceInfo_ps->dvcOpeCfg_ps->SetCfg_pcb != (t_cbAppSns_SetSnsCfg *)NULL_FUNCTION)
         {
+            //---- configuration ope ----//
             Ret_e = snsDeviceInfo_ps->dvcOpeCfg_ps->SetCfg_pcb( snsDeviceInfo_ps->dvcCfg_u8, 
                                                                 &drvUsed_e);
-
+            
             if(Ret_e == RC_OK)
             {
+                //---- driver operation ----//
                 if(drvUsed_e != APPSNS_DRV_NB
                 && (drvUsed_e < APPSNS_DRV_NB))
                 {
@@ -609,6 +650,35 @@ static t_eReturnCode s_APPSNS_Fsm_CfgSts_ApplyCfg(void)
     return Ret_e;
 }
 
+/*********************************
+ * s_APPSNS_Fsm_CfgSts_LoadCalib
+ *********************************/
+static t_eReturnCode s_APPSNS_Fsm_CfgSts_LoadCalib(void)
+{
+    t_eReturnCode Ret_e;
+    t_uint8 idxSnsItf_u8;
+
+    Ret_e = RC_OK;
+    for(idxSnsItf_u8 = (t_uint8)0 ; 
+    (idxSnsItf_u8 < (t_uint8)APPSNS_SNSITF_NB)
+    && (Ret_e == RC_OK); 
+    idxSnsItf_u8++)
+    {
+        Ret_e = APPSNSCAL_Load((t_eAPPSNS_SnsInterface)idxSnsItf_u8);
+        if(Ret_e == RC_OK)
+        {
+            Ret_e = APPSNSCAL_SetEnable((t_eAPPSNS_SnsInterface)idxSnsItf_u8, TRUE);
+
+            //---- it means no calibration mode set, ok -----// 
+            if(Ret_e == RC_WARNING_NOT_ALLOWED)
+            {
+                Ret_e = RC_OK;
+            }
+        }
+    }
+
+    return Ret_e;
+}
 /*********************************
  * s_APPSNS_Fsm_CfgSts_InitDriver
  *********************************/
