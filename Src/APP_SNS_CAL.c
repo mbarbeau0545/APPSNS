@@ -33,7 +33,7 @@
 typedef struct 
 {
     t_bool isEnable_b;
-    t_sAPPSNSCAL_CalibCfg * cfg_ps;
+    const t_sAPPSNSCAL_CalibCfg * cfg_ps;
     t_float32 currOffset_f32;
     t_float32 currGain_f32;
 } t_sAPPSNSCAL_CalibInfo;

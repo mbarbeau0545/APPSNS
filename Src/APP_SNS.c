@@ -91,7 +91,6 @@ t_eAPPSNS_DrvState g_SnsDrvState_ae[APPSNS_DRV_NB];
 
 ///@brief Fast Task Managment 
 static t_bool g_enableFastTask_b = FALSE;
-static t_bool g_isFastTaskON_b = FALSE;
 //********************************************************************************
 //                      Local functions - Prototypes
 //********************************************************************************
