@@ -367,6 +367,10 @@ t_eReturnCode APPSNS_Cyclic(void)
         {
             g_AppSns_ModState_e = STATE_CYCLIC_PREOPE;
         }
+        else if(Ret_e < RC_OK)
+        {
+            g_AppSns_ModState_e = STATE_CYCLIC_ERROR;
+        }
         break;
     }
     case STATE_CYCLIC_PREOPE:
@@ -439,12 +443,12 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
     {
         Ret_e = RC_WARNING_BUSY;
     }
-    if(f_SnsInfo_ps == (t_sAPPSNS_SnsValueInfo *)NULL)
+    else if(f_SnsInfo_ps == (t_sAPPSNS_SnsValueInfo *)NULL)
     {
         Ret_e = RC_ERROR_PTR_NULL;
         ASSERT((t_uint16)0);
     }
-    if(f_Sns_e >= APPSNS_SNSITF_NB)
+    else if(f_Sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
         ASSERT((t_uint16)f_Sns_e);
@@ -632,6 +636,10 @@ static t_eReturnCode s_APPSNS_Fsm_CfgSts_ApplyCfg(void)
             else if(Ret_e == RC_WARNING_NO_OPERATION)
             {
                 Ret_e = RC_OK;
+            }
+            else if(Ret_e < RC_OK)
+            {
+                ASSERT((t_uint16)s_LLSNS_u8);
             }
         }
         else
