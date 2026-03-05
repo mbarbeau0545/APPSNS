@@ -166,11 +166,12 @@ static void s_APPSNS_DebugRoutine(void);
             rqstedUnity_u this function called the right function to calculate the unity ask.\n
 *   
 *	@param[in] f_snsInfo_ps : Structure that contains all information.\n
-*	 
-*
 *
 */
-t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, t_sAPPSNS_SnsValueInfo *f_snsInfo_ps);
+t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, 
+                                            t_uint8 f_reqUnity_u8,
+                                            t_float32 f_SnsValue_f32, 
+                                            t_float32 *f_convertValue_pf32);
 /**
 *
 *	@brief  Convert Temperature Management
@@ -438,6 +439,7 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
     t_eAPPSNS_SnsDeviceList snsDeviceLink_e;
     t_sAPPSNS_SnsIfaceInfo * snsIfInfo_ps;
     t_float32 calibRawValue_f32;
+    t_float32 snsValue_f32;
 
     if(g_AppSns_ModState_e != STATE_CYCLIC_OPE)
     {
@@ -471,18 +473,27 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
             Ret_e = snsIfInfo_ps->cfgInfo_ps->GetValue_pcb(&f_SnsInfo_ps->rawValue_f32, &f_SnsInfo_ps->isValueOK_b);
             if(Ret_e == RC_OK)
             {
-                //---- apply calibratio on raw value 
+                //---- apply calibratio on raw value ----//
                 Ret_e = APPSNSCAL_Apply(f_Sns_e,
                                         f_SnsInfo_ps->rawValue_f32,
                                         &calibRawValue_f32);
                 if(Ret_e == RC_OK)
                 {
-                    f_SnsInfo_ps->rawValue_f32 = calibRawValue_f32;
+                    snsValue_f32 = calibRawValue_f32;
                 }
-            }
-            if(Ret_e == RC_OK)
-            {
-                Ret_e = s_APPSNS_ConvertingManagement(f_Sns_e, f_SnsInfo_ps);
+            
+                if(Ret_e == RC_OK)
+                {
+                    Ret_e = s_APPSNS_ConvertingManagement(  f_Sns_e, 
+                                                            f_SnsInfo_ps->rqstedUnity_u8,
+                                                            calibRawValue_f32,
+                                                            &f_SnsInfo_ps->SnsValue_f32);
+                
+                    if(Ret_e != RC_OK)
+                    {
+                        f_SnsInfo_ps->isValueOK_b = FALSE;
+                    }
+                }
             }
             else 
             {
@@ -752,7 +763,7 @@ static t_eReturnCode s_APPSNS_Operational(void)
 }
 
 /*********************************
- * s_APPSNS_ConvertingManagement
+ * s_APPSNS_FastTask
  *********************************/
 static void s_APPSNS_FastTask(void)
 {
@@ -803,62 +814,66 @@ static void s_APPSNS_DebugRoutine(void)
 /*********************************
  * s_APPSNS_ConvertingManagement
  *********************************/
-t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, t_sAPPSNS_SnsValueInfo *f_snsInfo_ps)
+t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, 
+                                            t_uint8 f_reqUnity_u8,
+                                            t_float32 f_SnsValue_f32, 
+                                            t_float32 *f_convertValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
+    t_float32 formatValue_f32;
 
-    Ret_e = c_AppSns_SysSns_as[f_sns_e].FormatValSI_pcb(f_snsInfo_ps->rawValue_f32, &f_snsInfo_ps->SnsValue_f32);
+    Ret_e = c_AppSns_SysSns_as[f_sns_e].FormatValSI_pcb(f_SnsValue_f32, &formatValue_f32);
     if(Ret_e == RC_OK)
     {
         switch(c_AppSns_SysSns_as[f_sns_e].measTyp_e)
         {
             case APPSNS_MEASTYPE_RAW:
-                f_snsInfo_ps->SnsValue_f32 = (t_float32)f_snsInfo_ps->rawValue_f32;
+                *f_convertValue_pf32 = f_SnsValue_f32;
                 Ret_e = RC_OK;
                 break;
             case APPSNS_MEASTYPE_PRESSURE:
-                Ret_e = s_APPSNS_ConvertPressure((t_eAPPSNS_PressureUnity)f_snsInfo_ps->rqstedUnity_u8,
-                                                f_snsInfo_ps->rawValue_f32,
-                                                &f_snsInfo_ps->SnsValue_f32);
+                Ret_e = s_APPSNS_ConvertPressure((t_eAPPSNS_PressureUnity)f_reqUnity_u8,
+                                                formatValue_f32,
+                                                f_convertValue_pf32);
                 break;
             case APPSNS_MEASTYPE_TEMPERATURE:
-                Ret_e = s_APPSNS_ConvertTemperature((t_eAPPSNS_TempUnity)f_snsInfo_ps->rqstedUnity_u8,
-                                                f_snsInfo_ps->rawValue_f32,
-                                                &f_snsInfo_ps->SnsValue_f32);
+                Ret_e = s_APPSNS_ConvertTemperature((t_eAPPSNS_TempUnity)f_reqUnity_u8,
+                                                formatValue_f32,
+                                                f_convertValue_pf32);
                 break;
             case APPSNS_MEASTYPE_SPEED:
-                Ret_e = s_APPSNS_ConvertSpeed((t_eAPPSNS_SpeedUnity)f_snsInfo_ps->rqstedUnity_u8,
-                                                f_snsInfo_ps->rawValue_f32,
-                                                &f_snsInfo_ps->SnsValue_f32);
+                Ret_e = s_APPSNS_ConvertSpeed((t_eAPPSNS_SpeedUnity)f_reqUnity_u8,
+                                                formatValue_f32,
+                                                f_convertValue_pf32);
                 break;
             case APPSNS_MEASTYPE_ANGLE:
-                Ret_e = s_APPSNS_ConvertAngle((t_eAPPSNS_AngleUnity)f_snsInfo_ps->rqstedUnity_u8,
-                                                f_snsInfo_ps->rawValue_f32,
-                                                &f_snsInfo_ps->SnsValue_f32);
+                Ret_e = s_APPSNS_ConvertAngle((t_eAPPSNS_AngleUnity)f_reqUnity_u8,
+                                                formatValue_f32,
+                                                f_convertValue_pf32);
                 break;          
             case APPSNS_MEASTYPE_ANGULAR_SPD:
-                Ret_e = s_APPSNS_ConvertAngularSpeed((t_eAPPSNS_AngularSpdUnity)f_snsInfo_ps->rqstedUnity_u8,
-                                                f_snsInfo_ps->rawValue_f32,
-                                                &f_snsInfo_ps->SnsValue_f32);
+                Ret_e = s_APPSNS_ConvertAngularSpeed((t_eAPPSNS_AngularSpdUnity)f_reqUnity_u8,
+                                                formatValue_f32,
+                                                f_convertValue_pf32);
             case APPSNS_MEASTYPE_DISTANCE:
-                Ret_e = s_APPSNS_ConvertDistance((t_eAPPSNS_DistanceUnity)f_snsInfo_ps->rqstedUnity_u8,
-                                                f_snsInfo_ps->rawValue_f32,
-                                                &f_snsInfo_ps->SnsValue_f32);
+                Ret_e = s_APPSNS_ConvertDistance((t_eAPPSNS_DistanceUnity)f_reqUnity_u8,
+                                                formatValue_f32,
+                                                f_convertValue_pf32);
                 break;
             case APPSNS_MEASTYPE_FORCE:
-                Ret_e = s_APPSNS_ConvertForce((t_eAPPSNS_ForceUnity)f_snsInfo_ps->rqstedUnity_u8,
-                                                f_snsInfo_ps->rawValue_f32,
-                                                &f_snsInfo_ps->SnsValue_f32);
+                Ret_e = s_APPSNS_ConvertForce((t_eAPPSNS_ForceUnity)f_reqUnity_u8,
+                                                formatValue_f32,
+                                                f_convertValue_pf32);
                 break;
             case APPSNS_MEASTYPE_FLOW:
-                Ret_e = s_APPSNS_ConvertFlow((t_eAPPSNS_FlowUnity)f_snsInfo_ps->rqstedUnity_u8,
-                                                f_snsInfo_ps->rawValue_f32,
-                                                &f_snsInfo_ps->SnsValue_f32);
+                Ret_e = s_APPSNS_ConvertFlow((t_eAPPSNS_FlowUnity)f_reqUnity_u8,
+                                                formatValue_f32,
+                                                f_convertValue_pf32);
                 break;
             case APPSNS_MEASTYPE_NB:
             default:
                 Ret_e = RC_ERROR_PARAM_INVALID;
-                f_snsInfo_ps->SnsValue_f32 = (t_float32)f_snsInfo_ps->rawValue_f32;
+                *f_convertValue_pf32 = f_SnsValue_f32;;
                 ASSERT((t_uint16)c_AppSns_SysSns_as[f_sns_e].measTyp_e);
         }
     }
@@ -1180,19 +1195,19 @@ static t_eReturnCode s_APPSNS_ConvertAngularSpeed(t_eAPPSNS_AngularSpdUnity f_un
                 *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * 1000.0F; 
             break;
             case APPSNS_ANGULARSPD_DEGREE_PER_SEC:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(180.0 / M_PI);
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(180.0 / CST_PI_RAD);
                 break;
 
             case APPSNS_ANGULARSPD_ROUND_PER_MIN:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(60.0 / (2.0 * M_PI));
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(60.0 / (2.0 * CST_PI_RAD));
                 break;
 
             case APPSNS_ANGULARSPD_ROUND_PER_SEC:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 / (t_float32)(2.0 * M_PI);
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 / (t_float32)(2.0 * CST_PI_RAD);
                 break;
 
             case APPSNS_ANGULARSPD_DEGREE_PER_MIN:
-                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(180.0 * 60.0 / M_PI);
+                *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32 * (t_float32)(180.0 * 60.0 / CST_PI_RAD);
                 break;
 
             case APPSNS_ANGULARSPD_NB:
