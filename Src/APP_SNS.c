@@ -94,67 +94,36 @@ static t_bool g_enableFastTask_b = FALSE;
 //********************************************************************************
 //                      Local functions - Prototypes
 //********************************************************************************
-/**
-*
-*	@brief
-*	@note   
-*
-*
-*/
+/** @brief Advances the sensor-module configuration state machine. @return State-processing status. */
 static t_eReturnCode s_APPSNS_ConfigurationState(void);
-/**
-*
-*	@brief
-*	@note   
-*
-*
-*/
+/** @brief Gets sensor configuration data. @return Configuration status. */
 static t_eReturnCode s_APPSNS_Fsm_CfgSts_GetCfg(void);
-/**
-*
-*	@brief
-*	@note   
-*
-*
-*/
+/** @brief Applies sensor configuration data. @return Configuration status. */
 static t_eReturnCode s_APPSNS_Fsm_CfgSts_ApplyCfg(void);
-/**
-*
-*	@brief
-*	@note   
-*
-*
-*/
+/** @brief Loads calibration data for configured sensors. @return Calibration status. */
 static t_eReturnCode s_APPSNS_Fsm_CfgSts_LoadCalib(void);
-/**
-*
-*	@brief
-*	@note   
-*
-*
-*/
+/** @brief Initializes configured sensor drivers. @return Initialization status. */
 static t_eReturnCode s_APPSNS_Fsm_CfgSts_InitDriver(void);
 /**
  *
- *	@brief      Perform preOperationnal action.\n
- *  @note       Set the sensor configuration.\n
+ *	@brief      Performs operational sensor processing.\n
  */
 static t_eReturnCode s_APPSNS_Operational(void);
 /**
  *
- *	@brief      Perform preOperationnal action.\n
+ *	@brief      Performs pre-operational sensor processing.\n
  */
 static t_eReturnCode s_APPSNS_PreOperational(void);
 /**
  *
- *	@brief      Perform preOperationnal action.\n
+ *	@brief      Executes the sensor module fast task.\n
 
 
  */
 static void s_APPSNS_FastTask(void);
 /**
  *
- *	@brief      Perform preOperationnal action.\n
+ *	@brief      Executes the sensor module debug routine.\n
 
 
  */

@@ -74,7 +74,7 @@
     *
     *	@brief Function to know the module state.\n 
     *
-    *	@param[in]  f_State_pe : store the value, value from @ref t_eCyclicModState
+    *	@param[out] f_State_pe : destination for the current module state.
     *
     *   @retval RC_OK                             @ref RC_OK
     *   @retval RC_ERROR_PTR_NULL                 @ref RC_ERROR_PTR_NUL
@@ -93,8 +93,8 @@
     *
     *	@brief  Get sensor value 
     *
-    *	@param[in]  f_Sns_e   : actuator enum
-    *	@param[in]  f_value_ps16   : storage for the value 
+    *	@param[in]  f_Sns_e : sensor interface identifier.
+    *	@param[out] f_SnsValue_ps16 : destination for the sensor value and status.
     * 
     */
     t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsValue_ps16);
