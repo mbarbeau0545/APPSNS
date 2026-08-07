@@ -281,7 +281,7 @@ t_eReturnCode APPSNS_Init(void)
         || c_AppSns_SysSns_as[idxSnsIf_u8].measTyp_e > APPSNS_MEASTYPE_NB)
         {
             Ret_e = RC_ERROR_PARAM_INVALID;
-            ASSERT((t_uint16)idxSnsIf_u8);
+            ASSERT((t_sint32)idxSnsIf_u8);
         }
 
         //---- set default value ----//
@@ -294,7 +294,7 @@ t_eReturnCode APPSNS_Init(void)
         if(c_AppSns_SnsDvcOpeCfg_as[idxDvcSns_u8].SetCfg_pcb == NULL_FUNCTION)
         {
             Ret_e = RC_ERROR_PARAM_INVALID;
-            ASSERT((t_uint16)idxDvcSns_u8);
+            ASSERT((t_sint32)idxDvcSns_u8);
         }
         else
         {
@@ -408,7 +408,6 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
     t_eAPPSNS_SnsDeviceList snsDeviceLink_e;
     t_sAPPSNS_SnsIfaceInfo * snsIfInfo_ps;
     t_float32 calibRawValue_f32;
-    t_float32 snsValue_f32;
 
     if(g_AppSns_ModState_e != STATE_CYCLIC_OPE)
     {
@@ -417,12 +416,12 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
     else if(f_SnsInfo_ps == (t_sAPPSNS_SnsValueInfo *)NULL)
     {
         Ret_e = RC_ERROR_PTR_NULL;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else if(f_Sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)f_Sns_e);
+        ASSERT((t_sint32)f_Sns_e);
     }
     else 
     {
@@ -439,17 +438,15 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
         else 
         {
             //---- call specific function to get value ----//
-            Ret_e = snsIfInfo_ps->cfgInfo_ps->GetValue_pcb(&f_SnsInfo_ps->rawValue_f32, &f_SnsInfo_ps->isValueOK_b);
+            Ret_e = snsIfInfo_ps->cfgInfo_ps->GetValue_pcb( &f_SnsInfo_ps->rawValue_f32, 
+                                                            &f_SnsInfo_ps->isValueOK_b);
+
             if(Ret_e == RC_OK)
             {
                 //---- apply calibratio on raw value ----//
                 Ret_e = APPSNSCAL_Apply(f_Sns_e,
                                         f_SnsInfo_ps->rawValue_f32,
                                         &calibRawValue_f32);
-                if(Ret_e == RC_OK)
-                {
-                    snsValue_f32 = calibRawValue_f32;
-                }
             
                 if(Ret_e == RC_OK)
                 {
@@ -470,6 +467,7 @@ t_eReturnCode APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsV
                 f_SnsInfo_ps->rawValue_f32 = (t_float32)0.0f;
                 f_SnsInfo_ps->SnsValue_f32 = (t_float32)0.0f;
             }
+
             //---- for debug purpose ----//
             snsIfInfo_ps->snsValues_f32 = (t_float32)(f_SnsInfo_ps->SnsValue_f32);
         }
@@ -619,13 +617,13 @@ static t_eReturnCode s_APPSNS_Fsm_CfgSts_ApplyCfg(void)
             }
             else if(Ret_e < RC_OK)
             {
-                ASSERT((t_uint16)s_LLSNS_u8);
+                ASSERT((t_sint32)s_LLSNS_u8);
             }
         }
         else
         {
             Ret_e = RC_ERROR_PTR_NULL;
-            ASSERT((t_uint16)s_LLSNS_u8);
+            ASSERT((t_sint32)s_LLSNS_u8);
         }
     }
     if((s_LLSNS_u8 < APPSNS_SNSDVC_NB)
@@ -721,8 +719,8 @@ static t_eReturnCode s_APPSNS_Operational(void)
         }
         if(Ret_e < RC_OK)
         {
-            ASSERT((t_uint16)LLDRV_u8);
-            ASSERT((t_uint16)Ret_e);
+            ASSERT((t_sint32)LLDRV_u8);
+            ASSERT((t_sint32)Ret_e);
         }
     }
 
@@ -748,8 +746,8 @@ static void s_APPSNS_FastTask(void)
         }
         if(Ret_e < RC_OK)
         {
-            ASSERT((t_uint16)LLDRV_u8);
-            ASSERT((t_uint16)Ret_e);
+            ASSERT((t_sint32)LLDRV_u8);
+            ASSERT((t_sint32)Ret_e);
         }
     }
 
@@ -773,7 +771,7 @@ static void s_APPSNS_DebugRoutine(void)
             Ret_e = APPSIG_SetSignalValue(snsIfInfo_ps->cfgInfo_ps->SigDebug_e, snsIfInfo_ps->snsValues_f32);
             if(Ret_e != RC_OK)
             {
-                ASSERT((t_uint16)Ret_e);
+                ASSERT((t_sint32)Ret_e);
             }
         }
     }
@@ -843,7 +841,7 @@ t_eReturnCode s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e,
             default:
                 Ret_e = RC_ERROR_PARAM_INVALID;
                 *f_convertValue_pf32 = f_SnsValue_f32;;
-                ASSERT((t_uint16)c_AppSns_SysSns_as[f_sns_e].measTyp_e);
+                ASSERT((t_sint32)c_AppSns_SysSns_as[f_sns_e].measTyp_e);
         }
     }
     return Ret_e;
@@ -884,7 +882,7 @@ static t_eReturnCode s_APPSNS_ConvertTemperature(t_eAPPSNS_TempUnity f_unity_e,
             default:
                 *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
-                ASSERT((t_uint16)f_unity_e);
+                ASSERT((t_sint32)f_unity_e);
         }
     }
     return Ret_e;
@@ -924,7 +922,7 @@ static t_eReturnCode s_APPSNS_ConvertFlow(t_eAPPSNS_FlowUnity f_unity_e,
             default:
                 *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
-                ASSERT((t_uint16)f_unity_e);
+                ASSERT((t_sint32)f_unity_e);
         }
     }
     return Ret_e;
@@ -964,7 +962,7 @@ static t_eReturnCode s_APPSNS_ConvertForce(t_eAPPSNS_ForceUnity f_unity_e,
             default:
                 *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
-                ASSERT((t_uint16)f_unity_e);
+                ASSERT((t_sint32)f_unity_e);
         }
     }
     return Ret_e;
@@ -1049,7 +1047,7 @@ static t_eReturnCode s_APPSNS_ConvertAngle(t_eAPPSNS_AngleUnity f_unity_e,
             default:
                 *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
-                ASSERT((t_uint16)f_unity_e);
+                ASSERT((t_sint32)f_unity_e);
         }
     }
     return Ret_e;
@@ -1090,7 +1088,7 @@ static t_eReturnCode s_APPSNS_ConvertPressure(t_eAPPSNS_PressureUnity f_unity_e,
             default:
                 *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
-                ASSERT((t_uint16)f_unity_e);
+                ASSERT((t_sint32)f_unity_e);
         }
     }
     return Ret_e;
@@ -1130,7 +1128,7 @@ static t_eReturnCode s_APPSNS_ConvertSpeed(t_eAPPSNS_SpeedUnity f_unity_e,
             default:
                 *f_snsValue_pf32 = (t_float32)(f_snsValueSI_f32);
                 Ret_e = RC_WARNING_NOT_ALLOWED;
-                ASSERT((t_uint16)f_unity_e);
+                ASSERT((t_sint32)f_unity_e);
         }
     }
     return Ret_e;
@@ -1183,7 +1181,7 @@ static t_eReturnCode s_APPSNS_ConvertAngularSpeed(t_eAPPSNS_AngularSpdUnity f_un
             default:
                 *f_snsValue_pf32 = (t_float32)f_snsValueSI_f32;
                 Ret_e = RC_WARNING_NOT_ALLOWED;
-                ASSERT((t_uint16)f_unity_e);
+                ASSERT((t_sint32)f_unity_e);
         }
     }
     return Ret_e;

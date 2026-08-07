@@ -75,7 +75,7 @@ t_eReturnCode APPSNSCAL_Init(void)
     if((sizeof(g_AppSnsCal_Calib_as) / sizeof(g_AppSnsCal_Calib_as[0])) != APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_WRONG_CONFIG;
-        ASSERT((t_uint16)APPSNS_SNSITF_NB);
+        ASSERT((t_sint32)APPSNS_SNSITF_NB);
     }
 
     if(Ret_e == RC_OK)
@@ -108,7 +108,7 @@ t_eReturnCode APPSNSCAL_Apply(t_eAPPSNS_SnsInterface f_sns_e,
     if(f_output_pf32 == (t_float32 *)NULL)
     {
         Ret_e = RC_ERROR_PTR_NULL;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else if(g_AppSnsCal_Initialized_b == FALSE)
     {
@@ -117,7 +117,7 @@ t_eReturnCode APPSNSCAL_Apply(t_eAPPSNS_SnsInterface f_sns_e,
     else if(f_sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else
     {
@@ -137,7 +137,7 @@ t_eReturnCode APPSNSCAL_Apply(t_eAPPSNS_SnsInterface f_sns_e,
         {
             *f_output_pf32 = f_input_f32;
             Ret_e = RC_WARNING_NOT_ALLOWED;
-            ASSERT((t_uint16)calibInfo_ps->cfg_ps->mode_e);
+            ASSERT((t_sint32)calibInfo_ps->cfg_ps->mode_e);
         }
     }
 
@@ -152,44 +152,46 @@ t_eReturnCode APPSNSCAL_SetCalib(t_eAPPSNS_SnsInterface f_sns_e,
 {
     t_eReturnCode Ret_e;
     t_sAPPSNSCAL_CalibInfo * calibInfo_ps;
-    t_uAPPSPM_PrmValType prmOffset_u;
-    t_uAPPSPM_PrmValType prmGain_u;
+    t_float32 prmOffset_f32;
+    t_float32 prmGain_f32;
 
     if(g_AppSnsCal_Initialized_b == FALSE)
     {
         Ret_e = RC_ERROR_MODULE_NOT_INITIALIZED;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else if(f_sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else if(g_AppSnsCal_Calib_as[f_sns_e].cfg_ps->mode_e != 
         APPSNSCAL_CALMODE_OFFSET_GAIN)
     {
         Ret_e = RC_ERROR_WRONG_CONFIG;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else 
     {
         Ret_e = RC_OK;
         calibInfo_ps = &g_AppSnsCal_Calib_as[f_sns_e];
-        calibInfo_ps->currOffset_f32 = f_offset_f32;
-        calibInfo_ps->currGain_f32 = f_gain_f32;
+        prmOffset_f32 = f_offset_f32;
+        prmGain_f32 = f_gain_f32;
 
         //---- save param ----//
         if(calibInfo_ps->cfg_ps->prmOffsetID_e != APPSPM_PRM_NB)
         {
-            prmOffset_u.prmVal_f32 = calibInfo_ps->currOffset_f32;
-            Ret_e = APPSPM_SetParam(calibInfo_ps->cfg_ps->prmOffsetID_e, prmOffset_u);
+            Ret_e = APPSPM_SetParam(calibInfo_ps->cfg_ps->prmOffsetID_e, 
+                                    (const void *)&prmOffset_f32,
+                                    sizeof(prmOffset_f32));
         }
         if(Ret_e == RC_OK)
         {
             if(calibInfo_ps->cfg_ps->prmGainID_e != APPSPM_PRM_NB)
             {
-                prmGain_u.prmVal_f32 = calibInfo_ps->currGain_f32;
-                Ret_e = APPSPM_SetParam(calibInfo_ps->cfg_ps->prmGainID_e, prmGain_u);
+                Ret_e = APPSPM_SetParam(calibInfo_ps->cfg_ps->prmGainID_e, 
+                                        (const void *)&prmGain_f32,
+                                        sizeof(prmGain_f32));
             }
         }
     }
@@ -210,7 +212,7 @@ t_eReturnCode APPSNSCAL_SetEnable(t_eAPPSNS_SnsInterface f_sns_e, t_bool f_enabl
     else if(f_sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else if(g_AppSnsCal_Calib_as[f_sns_e].cfg_ps->mode_e >= 
             APPSNSCAL_CALMODE_NB)
@@ -240,7 +242,7 @@ t_eReturnCode APPSNSCAL_SetEnable(t_eAPPSNS_SnsInterface f_sns_e, t_bool f_enabl
     || (f_offset_pf32 == NULL))
     {
         Ret_e = RC_ERROR_PTR_NULL;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else if(g_AppSnsCal_Initialized_b == FALSE)
     {
@@ -249,7 +251,7 @@ t_eReturnCode APPSNSCAL_SetEnable(t_eAPPSNS_SnsInterface f_sns_e, t_bool f_enabl
     else if(f_sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else
     {
@@ -279,7 +281,7 @@ t_eReturnCode APPSNSCAL_RegisterReference(t_eAPPSNS_SnsInterface f_sns_e,
                                           t_float32 f_expectedValue_f32)
 {
     t_eReturnCode Ret_e;
-    t_uAPPSPM_PrmValType prmOffset_u;
+    t_float32 prmOffset_f32;
     t_sAPPSNSCAL_CalibInfo * calibInfo_ps;
 
     if(g_AppSnsCal_Initialized_b == FALSE)
@@ -289,13 +291,13 @@ t_eReturnCode APPSNSCAL_RegisterReference(t_eAPPSNS_SnsInterface f_sns_e,
     else if(f_sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else if(g_AppSnsCal_Calib_as[f_sns_e].cfg_ps->mode_e != 
         APPSNSCAL_CALMODE_OFFSET_GAIN)
     {
         Ret_e = RC_ERROR_WRONG_CONFIG;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else
     {
@@ -306,8 +308,10 @@ t_eReturnCode APPSNSCAL_RegisterReference(t_eAPPSNS_SnsInterface f_sns_e,
 
         if(calibInfo_ps->cfg_ps->prmOffsetID_e != APPSPM_PRM_NB)
         {
-            prmOffset_u.prmVal_f32 = calibInfo_ps->currOffset_f32;
-            Ret_e = APPSPM_SetParam(calibInfo_ps->cfg_ps->prmOffsetID_e, prmOffset_u);
+            prmOffset_f32 = calibInfo_ps->currOffset_f32;
+            Ret_e = APPSPM_SetParam(calibInfo_ps->cfg_ps->prmOffsetID_e,
+                                    (const void *)&prmOffset_f32,
+                                    sizeof(prmOffset_f32));;
         }
     }
 
@@ -321,8 +325,8 @@ t_eReturnCode APPSNSCAL_Load(t_eAPPSNS_SnsInterface f_sns_e)
 {
     t_eReturnCode Ret_e;
     t_sAPPSNSCAL_CalibInfo * calibInfo_ps;
-    t_uAPPSPM_PrmValType prmOffset_u;
-    t_uAPPSPM_PrmValType prmGain_u;
+    t_float32 prmOffset_f32 = 0.0F;
+    t_float32 prmGain_f32 = 0.0F;
 
     if(g_AppSnsCal_Initialized_b == FALSE)
     {
@@ -331,7 +335,7 @@ t_eReturnCode APPSNSCAL_Load(t_eAPPSNS_SnsInterface f_sns_e)
     else if(f_sns_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)0);
+        ASSERT((t_sint32)0);
     }
     else
     {
@@ -340,21 +344,22 @@ t_eReturnCode APPSNSCAL_Load(t_eAPPSNS_SnsInterface f_sns_e)
         calibInfo_ps = &g_AppSnsCal_Calib_as[f_sns_e];
         if(calibInfo_ps->cfg_ps->prmOffsetID_e != APPSPM_PRM_NB)
         {
-            prmOffset_u.prmVal_f32 = calibInfo_ps->currOffset_f32;
-            Ret_e = APPSPM_GetParam(calibInfo_ps->cfg_ps->prmOffsetID_e, &prmOffset_u);
+            Ret_e = APPSPM_GetParam(calibInfo_ps->cfg_ps->prmOffsetID_e, 
+                                    (void *)&prmOffset_f32,
+                                    sizeof(prmOffset_f32));
+        }
+        if((Ret_e == RC_OK)
+        && (calibInfo_ps->cfg_ps->prmGainID_e != APPSPM_PRM_NB))
+        {
+            Ret_e = APPSPM_GetParam(calibInfo_ps->cfg_ps->prmGainID_e,
+                                    (void *)&prmGain_f32,
+                                    sizeof(prmGain_f32));
+            
         }
         if(Ret_e == RC_OK)
         {
-            if(calibInfo_ps->cfg_ps->prmGainID_e != APPSPM_PRM_NB)
-            {
-                prmGain_u.prmVal_f32 = calibInfo_ps->currGain_f32;
-                Ret_e = APPSPM_GetParam(calibInfo_ps->cfg_ps->prmGainID_e, &prmGain_u);
-            }
-        }
-        if(Ret_e == RC_OK)
-        {
-            calibInfo_ps->currGain_f32 = prmGain_u.prmVal_f32;
-            calibInfo_ps->currOffset_f32 = prmOffset_u.prmVal_f32;
+            calibInfo_ps->currOffset_f32 = prmOffset_f32;
+            calibInfo_ps->currGain_f32 = prmGain_f32;
         }
     }
 
